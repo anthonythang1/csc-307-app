@@ -1,0 +1,7 @@
+{
+  "name": "csc-307-app",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
