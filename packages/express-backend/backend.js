@@ -82,3 +82,15 @@ app.post("/users", (req, res) => {
   addUser(userToAdd);
   res.send();
 });
+
+const delUser = (id) => {
+    users["users_list"].filter((user) => user["id"] !== id,
+  );
+};
+
+app.delete("/users/:id", (req, res) => {
+  const userToDel = req.params["id"];
+  delUser(userToDel);
+  res.send();
+});
+
