@@ -6,11 +6,25 @@ import React, { useState, useEffect } from "react";
 function MyApp() {
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
+  function removeOneCharacter(id, index) {
+    fetch(`http://localhost:8000/users/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (res.status === 204) {
+          const updated = characters.filter((character) => {
+            return character.id !== id;
+          });
+          setCharacters(updated);
+        } else if (res.status === 404) {
+          console.log("User not found on backend");
+        } else {
+          throw new Error("Failed to delete user");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function updateList(person) {

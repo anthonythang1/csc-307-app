@@ -120,15 +120,20 @@ const delUser = (id) => {
     const index = users["users_list"].findIndex((user) => user["id"] === id); 
   if (index !== -1){            // User found
     users["users_list"].splice(index, 1);
+    return true;
   }
   else {                  // User not found     
-    console.log("User not found");
+    return false;
   }
 };
 
 app.delete("/users/:id", (req, res) => {
   const userToDel = req.params.id;
-  delUser(userToDel);
-  res.send();
+  const deleted = delUser(userToDel);
+  if (deleted) {
+    res.status(204).send();
+  } else {
+    res.status(404).send("Resource not found.");
+  }
 });
 
