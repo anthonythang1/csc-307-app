@@ -95,9 +95,19 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
+const generateUserId = () => {
+  return Math.random().toString(36).substr(2, 9);
+};
+
 const addUser = (user) => {
-  users["users_list"].push(user);
-  return user;
+  const id = generateUserId();
+  const userWithId = {
+    id: id,
+    name: user.name,
+    job: user.job
+  };
+  users["users_list"].push(userWithId);
+  return userWithId;
 };
 
 app.post("/users", (req, res) => {
