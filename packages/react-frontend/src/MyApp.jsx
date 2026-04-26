@@ -13,7 +13,7 @@ function MyApp() {
       .then((res) => {
         if (res.status === 204) {
           const updated = characters.filter((character) => {
-            return character.id !== id;
+            return character._id !== id;
           });
           setCharacters(updated);
         } else if (res.status === 404) {
