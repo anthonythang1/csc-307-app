@@ -4,23 +4,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Helper function to build the URI from your 3 variables
-function getMongoURI(dbname) {
-  let connection_string = `mongodb://localhost:27017/${dbname}`;
-  const { MONGO_USER, MONGO_PWD, MONGO_CLUSTER } = process.env;
-
-  if (MONGO_USER && MONGO_PWD && MONGO_CLUSTER) {
-    // This builds the Atlas SRV string
-    connection_string = `mongodb+srv://${MONGO_USER}:${MONGO_PWD}@${MONGO_CLUSTER}/${dbname}?retryWrites=true&w=majority`;
-  }
-  return connection_string;
-}
-
 mongoose.set("debug", true);
 
-// Connect using the helper function
+// Connect using the connection string from .env
+const { MONGO_CONNECTION_STRING } = process.env;
+
 mongoose
-  .connect(getMongoURI("users"))
+  .connect(MONGO_CONNECTION_STRING)
   .then(() =>
     console.log("Connected to MongoDB Atlas successfully!")
   )
